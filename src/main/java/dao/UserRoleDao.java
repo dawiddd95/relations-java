@@ -21,12 +21,15 @@ public class UserRoleDao {
 
     private void init() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/"+databaseName+"?useSSL=false", user, password);
+            // dla mysql => "com.mysql.jdbc.Driver"
+            Class.forName("org.postgresql.Driver");
+            // dla mysql => "jdbc:mysql://localhost/"+databaseName+"?useSSL=false"
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost/"+databaseName+"?useSSL=false", user, password);
         } catch(Exception e) {
             e.printStackTrace();
         }
     }
+
 
     public List<UserRole> getAllUserRoles() {
         List<UserRole> userRoles = new LinkedList<UserRole>();
