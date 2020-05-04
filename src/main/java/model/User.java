@@ -1,32 +1,55 @@
 package model;
 
 public class User {
-    public final static String USER_SEPARATOR = "#";
+    private Integer id;
+    private String name;
+    private String lastname;
+    private Integer age;
+    private UserRole userRole;
 
-    private Long id;
-    private String login;
-    private String password;
-
-    public User(Long id, String login, String password) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
+    public User(String name, String lastname, Integer age, UserRole userRole) {
+        this.name = name;
+        this.lastname = lastname;
+        this.age = age;
+        this.userRole = userRole;
     }
 
-    public Long getId() {
+    public User(Integer id, String name, String lastname, Integer age, UserRole userRole) {
+        this.id = id;
+        this.name = name;
+        this.lastname = lastname;
+        this.age = age;
+        this.userRole = userRole;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public String getPassword() {
-        return password;
+    public UserRole getUserRole() {
+        return userRole;
     }
 
     @Override
     public String toString() {
-        return id + USER_SEPARATOR + login + USER_SEPARATOR + password;
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", age=" + age +
+                ", userRole=" + userRole +
+                '}';
     }
 }

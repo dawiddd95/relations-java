@@ -1,5 +1,6 @@
 package dao;
 
+import model.User;
 import model.UserRole;
 import model.enums.Role;
 
@@ -9,9 +10,8 @@ import java.util.List;
 
 public class UserRoleDao {
     private Connection connection;
-    private UserRoleDao userRoleDao = new UserRoleDao();
     private final String databaseName = "people";
-    private final String tableName = "users";
+    private final String tableName = "roles";
     private final String user = "root";
     private final String password = "admin";
 
@@ -21,10 +21,8 @@ public class UserRoleDao {
 
     private void init() {
         try {
-            // dla mysql => "com.mysql.jdbc.Driver"
-            Class.forName("org.postgresql.Driver");
-            // dla mysql => "jdbc:mysql://localhost/"+databaseName+"?useSSL=false"
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost/"+databaseName+"?useSSL=false", user, password);
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/"+databaseName+"?useSSL=false", user, password);
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -37,20 +35,19 @@ public class UserRoleDao {
             statement = connection.createStatement();
             String query = "select * from " + tableName;
             ResultSet resultSet = statement.executeQuery(query);
+
             while (resultSet.next()) {
                 Integer id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                String surname = resultSet.getString("surname");
-                Integer age = resultSet.getInt("age");
-                Integer userRoleId = resultSet.getInt("user_role_id");
-                UserRole userRole = userRoleDao.getRoleById(userRoleId);
-                User user = new User(id, name, lastname, age, userRole);
-                users.add(user);
+                String name = resultSet.getString("role");
+
+
+                userRoles.add(new UserRole(id, Role.valueOf(name)));
             }
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return userRoles;
     }
 
@@ -59,7 +56,9 @@ public class UserRoleDao {
         try {
             String query = "select * from " + tableName + " where id = '" + id + "'";
             statement = connection.createStatement();
+
             ResultSet resultSet = statement.executeQuery(query);
+
             while (resultSet.next()) {
                 String role = resultSet.getString("role");
                 Role userRole = Role.valueOf(role);
@@ -69,6 +68,7 @@ public class UserRoleDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
@@ -77,7 +77,9 @@ public class UserRoleDao {
         try {
             statement = connection.createStatement();
             String query = "select * from " + tableName + " where role = '" + roleName + "'";
+
             ResultSet resultSet = statement.executeQuery(query);
+
             while (resultSet.next()) {
                 Integer id = resultSet.getInt("id");
                 return id;
@@ -86,9 +88,7 @@ public class UserRoleDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return 0;
     }
-
-
-
 }
