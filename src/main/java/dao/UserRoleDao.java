@@ -9,8 +9,9 @@ import java.util.List;
 
 public class UserRoleDao {
     private Connection connection;
+    private UserRoleDao userRoleDao = new UserRoleDao();
     private final String databaseName = "people";
-    private final String tableName = "roles";
+    private final String tableName = "users";
     private final String user = "root";
     private final String password = "admin";
 
@@ -38,8 +39,13 @@ public class UserRoleDao {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 Integer id = resultSet.getInt("id");
-                String name = resultSet.getString("role");
-                userRoles.add(new UserRole(id, Role.valueOf(name)));
+                String name = resultSet.getString("name");
+                String surname = resultSet.getString("surname");
+                Integer age = resultSet.getInt("age");
+                Integer userRoleId = resultSet.getInt("user_role_id");
+                UserRole userRole = userRoleDao.getRoleById(userRoleId);
+                User user = new User(id, name, lastname, age, userRole);
+                users.add(user);
             }
             statement.close();
         } catch (SQLException e) {
