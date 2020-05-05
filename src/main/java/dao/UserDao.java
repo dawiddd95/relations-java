@@ -11,8 +11,8 @@ public class UserDao {
     private Connection connection;
     private final String databaseName = "people";
     private final String tableName = "users";
-    private final String user = "root";
-    private final String password = "admin";
+    private final String user = "postgres";
+    private final String password = "m2svs4";
     private UserRoleDao userRoleDao = new UserRoleDao();
 
     public UserDao() {

@@ -12,8 +12,8 @@ public class UserRoleDao {
     private Connection connection;
     private final String databaseName = "people";
     private final String tableName = "roles";
-    private final String user = "root";
-    private final String password = "admin";
+    private final String user = "postgres";
+    private final String password = "m2svs4";
 
     public UserRoleDao() {
         init();
@@ -42,7 +42,6 @@ public class UserRoleDao {
             while (resultSet.next()) {
                 Integer id = resultSet.getInt("id");
                 String name = resultSet.getString("role");
-
 
                 userRoles.add(new UserRole(id, Role.valueOf(name)));
             }
